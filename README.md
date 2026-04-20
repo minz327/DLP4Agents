@@ -117,6 +117,23 @@ Run linting:
 npm run lint
 ```
 
+## GitHub Pages
+
+This repo is configured to deploy to GitHub Pages from `main` using GitHub Actions.
+
+Expected site URL:
+
+```text
+https://minz327.github.io/DLP4Agents/
+```
+
+To finish setup in GitHub:
+
+1. Open the repository settings.
+2. Go to Pages.
+3. Set the source to GitHub Actions.
+4. Push to `main` or run the `Deploy to GitHub Pages` workflow manually.
+
 ## Design intent
 
 This prototype aims to stay visually and behaviorally close to Microsoft Purview conventions:

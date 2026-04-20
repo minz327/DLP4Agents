@@ -70,7 +70,6 @@ export default function PolicyWizard({ onCancel }: PolicyWizardProps) {
   const [agentCategories, setAgentCategories] = useState({
     copilotStudio: false, foundry: false, nonMicrosoft: false, local: false,
   });
-  const [localAgentExpanded, setLocalAgentExpanded] = useState(false);
   const [localAgents, setLocalAgents] = useState({ githubCopilot: false, claudeCode: false });
   const [agentSearch, setAgentSearch] = useState('');
   const [selectedAgents, setSelectedAgents] = useState<Set<string>>(new Set());
