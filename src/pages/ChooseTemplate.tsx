@@ -1,5 +1,5 @@
 import { usePolicy } from '../context/PolicyContext';
-import { PolicyTemplate } from '../types/policy';
+import type { PolicyTemplate } from '../types/policy';
 
 const templates: { id: PolicyTemplate; name: string; description: string }[] = [
   { id: 'financial', name: 'Financial data', description: 'Detect credit card numbers, bank account info, and financial records.' },

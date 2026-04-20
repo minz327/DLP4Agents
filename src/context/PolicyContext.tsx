@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, ReactNode } from 'react';
-import { DLPPolicy, INITIAL_POLICY } from '../types/policy';
+import type { DLPPolicy } from '../types/policy';
+import { INITIAL_POLICY } from '../types/policy';
 
 interface PolicyContextType {
   policy: DLPPolicy;

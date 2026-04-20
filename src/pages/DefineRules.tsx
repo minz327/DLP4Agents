@@ -1,5 +1,5 @@
 import { usePolicy } from '../context/PolicyContext';
-import { PolicyRule } from '../types/policy';
+import type { PolicyRule } from '../types/policy';
 
 const SENSITIVE_INFO_TYPES = [
   { id: 'cc', name: 'Credit Card Number', category: 'Financial' },

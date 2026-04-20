@@ -1,5 +1,5 @@
 import { usePolicy } from '../context/PolicyContext';
-import { PolicyMode } from '../types/policy';
+import type { PolicyMode } from '../types/policy';
 
 const modes: { id: PolicyMode; name: string; description: string }[] = [
   { id: 'test', name: 'Test it out first', description: 'Run the policy in test mode without showing policy tips.' },
