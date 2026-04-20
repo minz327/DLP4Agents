@@ -1,0 +1,278 @@
+.policy-list-page {
+  padding: 24px 32px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.page-header h1 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #323130;
+  margin: 0 0 8px;
+}
+
+.page-description {
+  font-size: 13px;
+  color: #605e5c;
+  margin: 0 0 16px;
+  line-height: 1.5;
+}
+
+.page-description a {
+  color: #0078d4;
+  text-decoration: none;
+}
+
+.page-description a:hover {
+  text-decoration: underline;
+}
+
+.info-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border-radius: 4px;
+  font-size: 13px;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.info-banner a {
+  color: #0078d4;
+  text-decoration: none;
+}
+
+.info-banner a:hover {
+  text-decoration: underline;
+}
+
+.info-banner-blue {
+  background: #f0f6ff;
+  border: 1px solid #c7e0f4;
+}
+
+.info-banner-yellow {
+  background: #fff8e5;
+  border: 1px solid #f5e6c8;
+}
+
+.banner-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.banner-action {
+  margin-left: auto;
+  background: white;
+  border: 1px solid #8a8886;
+  border-radius: 4px;
+  padding: 4px 16px;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.banner-action:hover {
+  background: #f3f2f1;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toolbar-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 13px;
+  color: #323130;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.toolbar-btn:hover {
+  background: #f3f2f1;
+}
+
+.toolbar-btn-primary {
+  color: #0078d4;
+  font-weight: 600;
+}
+
+.dropdown-caret {
+  font-size: 10px;
+  color: #605e5c;
+}
+
+.item-count {
+  font-size: 13px;
+  color: #605e5c;
+  white-space: nowrap;
+}
+
+.toolbar-search {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid #8a8886;
+  border-radius: 4px;
+  padding: 4px 10px;
+  background: white;
+}
+
+.toolbar-search input {
+  border: none;
+  outline: none;
+  font-size: 13px;
+  width: 120px;
+  background: transparent;
+}
+
+.policy-table-wrapper {
+  overflow-x: auto;
+}
+
+.policy-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.policy-table thead {
+  border-bottom: 1px solid #edebe9;
+}
+
+.policy-table th {
+  text-align: left;
+  padding: 10px 12px;
+  font-weight: 600;
+  color: #605e5c;
+  font-size: 12px;
+  white-space: nowrap;
+  user-select: none;
+  cursor: pointer;
+}
+
+.sort-icon {
+  font-size: 10px;
+  color: #a19f9d;
+  margin-left: 4px;
+}
+
+.policy-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #f3f2f1;
+  color: #323130;
+  vertical-align: middle;
+}
+
+.policy-table tr:hover {
+  background: #f3f2f1;
+}
+
+.policy-table tr.selected {
+  background: #e6f3ff;
+}
+
+.col-checkbox {
+  width: 40px;
+}
+
+.col-name {
+  min-width: 250px;
+}
+
+.col-priority {
+  width: 80px;
+}
+
+.col-mode {
+  width: 220px;
+}
+
+.col-sync {
+  width: 200px;
+}
+
+.col-modified {
+  width: 180px;
+  white-space: nowrap;
+}
+
+.policy-name-link {
+  color: #0078d4;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.policy-name-link:hover {
+  text-decoration: underline;
+}
+
+.policy-actions-btn {
+  cursor: pointer;
+  color: #605e5c;
+  margin-right: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.policy-actions-btn:hover {
+  color: #323130;
+}
+
+.mode-on {
+  color: #323130;
+}
+
+.mode-off {
+  color: #a19f9d;
+}
+
+.mode-simulation {
+  color: #0078d4;
+}
+
+.sync-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.sync-dot-red {
+  background: #d13438;
+}
+
+.sync-dot-gray {
+  background: #a19f9d;
+}
+
+.sync-dot-green {
+  background: #107c10;
+}

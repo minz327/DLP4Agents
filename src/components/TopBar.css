@@ -1,0 +1,138 @@
+.topbar {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  background: #0078d4;
+  color: white;
+  padding: 0 16px;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.topbar-hamburger {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.topbar-brand {
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.topbar-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.topbar-search {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  padding: 0 12px;
+  width: 100%;
+  max-width: 480px;
+}
+
+.topbar-search:focus-within {
+  background: white;
+}
+
+.topbar-search:focus-within .search-input {
+  color: #323130;
+}
+
+.topbar-search:focus-within .search-input::placeholder {
+  color: #605e5c;
+}
+
+.search-icon {
+  font-size: 14px;
+  margin-right: 8px;
+}
+
+.search-input {
+  border: none;
+  background: none;
+  color: white;
+  font-size: 13px;
+  padding: 8px 0;
+  width: 100%;
+  outline: none;
+}
+
+.search-input::placeholder {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.topbar-copilot-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  color: white;
+  padding: 4px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.topbar-copilot-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.copilot-icon {
+  font-size: 14px;
+}
+
+.topbar-icon-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 4px;
+}
+
+.topbar-icon-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.topbar-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #9b4dca;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  margin-left: 4px;
+}
