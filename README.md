@@ -1,73 +1,148 @@
-# React + TypeScript + Vite
+# DLP4Agents
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+PM spec and interactive prototype for a Microsoft Purview-style Data Loss Prevention authoring experience focused on Agent-to-Tool policy creation.
 
-Currently, two official plugins are available:
+## Purpose
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+This project is a front-end prototype that explores how admins could create and scope DLP policies for agents, tools, and related Microsoft 365 surfaces. It is intended to communicate product direction, workflow design, and interaction patterns rather than serve as a production implementation.
 
-## React Compiler
+The prototype is optimized for:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- walkthroughs with design, engineering, and leadership
+- validating step-by-step authoring flow
+- discussing scoping models for agents and tools
+- demonstrating Purview-aligned information architecture and UI behavior
 
-## Expanding the ESLint configuration
+## What this prototype covers
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+The current experience includes a Purview-inspired shell and a multi-step create-policy flow.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Implemented areas:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- Policies landing page with sample policy inventory
+- Create policy entry point
+- Initial policy-type modal
+- Full-screen policy wizard shell with breadcrumb, vertical stepper, and bottom action bar
+- Template or custom policy selection
+- Policy naming step
+- Admin units step
+- Locations step
+- Agent location scoping with a dedicated flyout
+- Policy settings step
+- Advanced DLP rules step
+- Create rule flyout layered on top of the advanced rules page
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Key UX concepts represented
+
+- Purview-style navigation shell with top bar and left navigation
+- Progressive disclosure for complex configuration, especially for Agent scope selection
+- Support for multiple agent scoping models:
+  - all agents
+  - agent categories
+  - specific agents
+- Dynamic scope summary reflected back into the Locations table
+- Rule authoring shown as an overlay workflow instead of a separate page transition
+
+## Current flow
+
+The main authored flow currently looks like this:
+
+1. Open Policies
+2. Select Create policy
+3. Choose Enterprise applications and devices
+4. Start from template or custom policy
+5. Name the policy
+6. Assign admin units
+7. Choose locations
+8. Configure agent scope through the Agent flyout
+9. Define policy settings
+10. Customize advanced DLP rules
+11. Open Create rule in a flyout and draft a rule
+
+## Prototype status
+
+This is a prototype, not a production-ready service.
+
+What is intentionally true today:
+
+- data is local and mocked
+- there is no backend persistence
+- tables and forms are UI-driven prototypes
+- many controls are representative rather than fully modeled business logic
+- some later wizard steps remain placeholders
+
+## Tech stack
+
+- React 19
+- TypeScript
+- Vite
+- CSS modules are not used; styling is custom CSS per component
+- Fluent UI icons package is installed, though most visuals are currently hand-crafted with CSS and simple inline graphics
+
+## Project structure
+
+Important files and folders:
+
+- `src/App.tsx`: application shell and view switching between policy list and wizard
+- `src/components/TopBar.tsx`: Purview-style top navigation
+- `src/components/Sidebar.tsx`: Purview-style left navigation
+- `src/components/PolicyList.tsx`: policy inventory landing page
+- `src/components/CreatePolicyModal.tsx`: entry modal for policy type selection
+- `src/components/PolicyWizard.tsx`: main authoring workflow and flyouts
+- `src/data/samplePolicies.ts`: mocked policy list data
+
+## Running locally
+
+Install dependencies:
+
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Start the dev server:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
+
+Build the project:
+
+```bash
+npm run build
+```
+
+Run linting:
+
+```bash
+npm run lint
+```
+
+## Design intent
+
+This prototype aims to stay visually and behaviorally close to Microsoft Purview conventions:
+
+- Segoe UI typography
+- enterprise admin layout patterns
+- wizard-based configuration for policy authoring
+- right-side flyouts for scoped configuration tasks
+- low-friction empty states that can progressively expand into advanced authoring
+
+## Suggested next areas
+
+Natural next extensions for this prototype:
+
+- flesh out Policy mode and Finish steps
+- refine rule authoring controls to match the intended spec exactly
+- replace placeholder icons with consistent Fluent assets
+- introduce richer mock data for conditions, actions, and saved rules
+- add lightweight state persistence for demo continuity
+
+## Audience
+
+This repository is best understood as:
+
+- a PM prototype
+- a UX concept vehicle
+- a conversation artifact for engineering and design collaboration
+
+It is not yet a production architecture, API contract, or finalized admin experience.
