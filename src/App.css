@@ -17,6 +17,13 @@
   background: #ffffff;
 }
 
+.app-main-report {
+  background:
+    radial-gradient(circle at top left, rgba(209, 236, 255, 0.68), transparent 34%),
+    radial-gradient(circle at top right, rgba(222, 246, 225, 0.76), transparent 28%),
+    linear-gradient(180deg, #f7fbff 0%, #ffffff 28%);
+}
+
 .wizard-container {
   max-width: 900px;
   margin: 0 auto;

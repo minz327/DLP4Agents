@@ -5,7 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "dev:base": "vite --base /DLP4Agents/base/",
+    "dev:build": "vite --base /DLP4Agents/Build/",
+    "build:base": "tsc -b && vite build --base /DLP4Agents/base/ --outDir dist/base",
+    "build:build": "vite build --base /DLP4Agents/Build/ --outDir dist/Build",
+    "build": "npm run clean && npm run build:base && npm run build:build && node -e \"require('fs').copyFileSync('landing/index.html','dist/index.html')\"",
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
     "lint": "eslint .",
     "preview": "vite preview"
   },

@@ -35,8 +35,17 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build app
-        run: npm run build
+      - name: Clean dist
+        run: rm -rf dist
+
+      - name: Build base version
+        run: npm run build:base
+
+      - name: Build "Build" version
+        run: npm run build:build
+
+      - name: Copy landing page to dist root
+        run: cp landing/index.html dist/index.html
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

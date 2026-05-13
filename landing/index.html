@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DLP4Agents — Prototypes</title>
+  <link rel="icon" type="image/svg+xml" href="base/favicon.svg" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #f5f5f5;
+      color: #242424;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 80px 24px;
+    }
+    .container { max-width: 720px; width: 100%; }
+    h1 {
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .subtitle {
+      color: #616161;
+      font-size: 14px;
+      margin-bottom: 32px;
+    }
+    .card-list { display: flex; flex-direction: column; gap: 12px; }
+    .card {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-decoration: none;
+      color: inherit;
+      transition: box-shadow 0.15s, border-color 0.15s;
+    }
+    .card:hover {
+      border-color: #0078d4;
+      box-shadow: 0 2px 8px rgba(0, 120, 212, 0.12);
+    }
+    .card-info { display: flex; flex-direction: column; gap: 4px; }
+    .card-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: #0078d4;
+    }
+    .card-desc {
+      font-size: 13px;
+      color: #616161;
+    }
+    .card-arrow {
+      font-size: 18px;
+      color: #0078d4;
+      flex-shrink: 0;
+      margin-left: 16px;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+    .badge-current { background: #e6f2ff; color: #0078d4; }
+    .badge-new { background: #e6f9ed; color: #107c10; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>DLP4Agents Prototypes</h1>
+    <p class="subtitle">Select a prototype version to view.</p>
+    <div class="card-list">
+      <a class="card" href="base/">
+        <div class="card-info">
+          <span class="card-name">Base <span class="badge badge-current">current</span></span>
+          <span class="card-desc">Original Purview-style DLP policy authoring experience with agent scoping.</span>
+        </div>
+        <span class="card-arrow">→</span>
+      </a>
+      <a class="card" href="Build/">
+        <div class="card-info">
+          <span class="card-name">Build <span class="badge badge-new">new</span></span>
+          <span class="card-desc">In-progress iteration with updated flows and capabilities.</span>
+        </div>
+        <span class="card-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</body>
+</html>
