@@ -112,6 +112,8 @@ export default function PolicyWizard({ onCancel }: PolicyWizardProps) {
     { id: 'agent-011', name: 'MarketPulse', color: '#e74c3c', letter: 'M', publisher: 'Created by your org', platform: 'Microsoft Copilot Studio' },
     { id: 'agent-012', name: 'Analyst IQ', color: '#605e5c', letter: 'A', publisher: 'Analyst IQ Inc.', platform: 'Microsoft Copilot Studio' },
     { id: 'agent-013', name: 'Quant Deck', color: '#0078d4', letter: 'Q', publisher: 'Created by user', platform: 'Azure AI Foundry' },
+    { id: 'agent-014', name: 'GitHub Copilot CLI', color: '#24292e', letter: 'G', publisher: 'GitHub', platform: 'Local agent' },
+    { id: 'agent-015', name: 'Claude Code', color: '#d97757', letter: 'C', publisher: 'Anthropic', platform: 'Local agent' },
   ];
   const filteredAgents = SAMPLE_AGENTS.filter((a) =>
     a.name.toLowerCase().includes(agentSearch.toLowerCase()) || a.id.toLowerCase().includes(agentSearch.toLowerCase())
@@ -149,14 +151,7 @@ export default function PolicyWizard({ onCancel }: PolicyWizardProps) {
       if (agentCategories.foundry) cats.push('Foundry');
       if (agentCategories.nonMicrosoft) cats.push('Non-Microsoft');
       if (agentCategories.local) {
-        const localSubs = [];
-        if (localAgents.githubCopilot) localSubs.push('GitHub Copilot CLI');
-        if (localAgents.claudeCode) localSubs.push('Claude Code');
-        if (localSubs.length > 0) {
-          cats.push(`Local agents - ${localSubs.join(', ')}`);
-        } else {
-          cats.push('Local agents');
-        }
+        cats.push('All local agents');
       }
       return cats.length > 0 ? cats.join(', ') : 'No categories selected';
     }
@@ -646,20 +641,8 @@ export default function PolicyWizard({ onCancel }: PolicyWizardProps) {
                   </label>
                   <label className="scope-checkbox-item">
                     <input type="checkbox" checked={agentCategories.local} onChange={(e) => setAgentCategories({ ...agentCategories, local: e.target.checked })} />
-                    <span>Local agents (runs on user devices)</span>
+                    <span>All local agents running on user devices (e.g. GitHub Copilot CLI, Claude Code, Cursor, etc.)</span>
                   </label>
-                  {agentCategories.local && (
-                    <div className="scope-sub-options">
-                      <label className="scope-checkbox-item scope-sub-item">
-                        <input type="checkbox" checked={localAgents.githubCopilot} onChange={(e) => setLocalAgents({ ...localAgents, githubCopilot: e.target.checked })} />
-                        <span>GitHub Copilot CLI agents</span>
-                      </label>
-                      <label className="scope-checkbox-item scope-sub-item">
-                        <input type="checkbox" checked={localAgents.claudeCode} onChange={(e) => setLocalAgents({ ...localAgents, claudeCode: e.target.checked })} />
-                        <span>Claude Code agents</span>
-                      </label>
-                    </div>
-                  )}
                 </div>
                 </>
               )}
