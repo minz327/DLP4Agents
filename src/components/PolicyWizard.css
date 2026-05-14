@@ -473,11 +473,281 @@
   margin-bottom: 4px;
 }
 
+.rule-section-collapsible {
+  cursor: pointer;
+  user-select: none;
+  gap: 8px;
+}
+
+.rule-section-collapsible:hover {
+  opacity: 0.8;
+}
+
+.rule-section-chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: #242424;
+  transition: transform 0.15s ease;
+  transform: rotate(0deg);
+  width: 16px;
+  height: 16px;
+}
+
+.rule-section-chevron.collapsed {
+  transform: rotate(-90deg);
+}
+
 .rule-section-title {
   margin: 0;
   font-size: 15px;
   font-weight: 600;
   color: #242424;
+}
+
+.rule-dropdown-wrapper {
+  position: relative;
+}
+
+.rule-dropdown-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.rule-add-icon {
+  font-size: 13px;
+}
+
+.rule-dropdown-chevron {
+  font-size: 11px;
+  margin-left: 2px;
+}
+
+.rule-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  background: #fff;
+  border: 1px solid #e1dfdd;
+  border-radius: 4px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+  z-index: 200;
+  min-width: 220px;
+  padding: 4px 0;
+}
+
+.rule-dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  background: none;
+  text-align: left;
+  font-size: 14px;
+  color: #242424;
+  cursor: pointer;
+}
+
+.rule-dropdown-item:hover {
+  background: #f3f2f1;
+}
+
+/* Condition panels */
+.cond-quick-summary-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.cond-quick-summary-label {
+  font-size: 13px;
+  color: #242424;
+}
+
+.incident-toggle.small {
+  width: 36px;
+  height: 18px;
+  min-width: 36px;
+}
+
+.incident-toggle.small .incident-toggle-knob {
+  width: 12px;
+  height: 12px;
+}
+
+.cond-panel {
+  border: 1px solid #e1dfdd;
+  border-radius: 6px;
+  background: #faf9f8;
+  margin-bottom: 0;
+}
+
+.cond-panel-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.cond-panel-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #242424;
+  flex: 1;
+}
+
+.cond-panel-delete {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: #605e5c;
+  padding: 2px 4px;
+}
+
+.cond-panel-delete:hover {
+  color: #242424;
+}
+
+.cond-panel-body {
+  padding: 0 16px 16px;
+}
+
+.cond-group-row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-end;
+  margin-bottom: 12px;
+}
+
+.cond-group-name {
+  flex: 1;
+}
+
+.cond-group-operator {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.field-select {
+  padding: 6px 10px;
+  border: 1px solid #8a8886;
+  border-radius: 4px;
+  font-size: 14px;
+  background: #fff;
+  color: #242424;
+  min-width: 120px;
+}
+
+.cond-group-delete-btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: #605e5c;
+  padding: 6px 4px;
+}
+
+.cond-group-delete-btn:hover {
+  color: #242424;
+}
+
+.cond-add-row {
+  margin-bottom: 16px;
+}
+
+.cond-predicate-section {
+  margin-bottom: 16px;
+  border-top: 1px solid #e1dfdd;
+  padding-top: 12px;
+}
+
+.cond-predicate-label {
+  font-size: 13px;
+  color: #605e5c;
+  margin-bottom: 8px;
+}
+
+.cond-predicate-radios {
+  display: flex;
+  gap: 20px;
+}
+
+.cond-radio {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #242424;
+  cursor: pointer;
+}
+
+.cond-radio input[type="radio"] {
+  accent-color: #0078d4;
+}
+
+.cond-create-group-row {
+  border-top: 1px solid #e1dfdd;
+  padding-top: 12px;
+}
+
+.cond-operator-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 8px 0;
+}
+
+.cond-operator-select {
+  padding: 4px 12px;
+  border: 2px solid #0078d4;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #0078d4;
+  background: #e6f3ff;
+  cursor: pointer;
+}
+
+.cond-accessed-desc {
+  font-size: 13px;
+  color: #605e5c;
+  margin-bottom: 12px;
+}
+
+.cond-accessed-input-row {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.cond-accessed-input {
+  flex: 1;
+}
+
+.cond-accessed-add-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 7px 16px;
+  border: 1px solid #8a8886;
+  border-radius: 4px;
+  background: #fff;
+  color: #242424;
+  font-size: 14px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.cond-accessed-add-btn:hover {
+  background: #f3f2f1;
 }
 
 .rule-section-desc {

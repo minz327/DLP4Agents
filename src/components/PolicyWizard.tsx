@@ -83,12 +83,23 @@ export default function PolicyWizard({ onCancel }: PolicyWizardProps) {
   const [incidentReportMode, setIncidentReportMode] = useState<'every' | 'threshold'>('every');
   const [incidentCountEnabled, setIncidentCountEnabled] = useState(false);
   const [incidentVolumeEnabled, setIncidentVolumeEnabled] = useState(false);
+  const [conditionsCollapsed, setConditionsCollapsed] = useState(false);
+  const [actionsCollapsed, setActionsCollapsed] = useState(false);
+  const [incidentCollapsed, setIncidentCollapsed] = useState(false);
+  const [conditionDropdownOpen, setConditionDropdownOpen] = useState(false);
+  const [actionDropdownOpen, setActionDropdownOpen] = useState(false);
+  const [activeConditions, setActiveConditions] = useState<string[]>([]);
+  const [contentContainsCollapsed, setContentContainsCollapsed] = useState(false);
+  const [accessedByCollapsed, setAccessedByCollapsed] = useState(false);
+  const [conditionGroupName, setConditionGroupName] = useState('Default');
+  const [conditionGroupOperator, setConditionGroupOperator] = useState('Any of these');
+  const [conditionPredicate, setConditionPredicate] = useState<'message-or-attachment' | 'message-only' | 'attachments-only'>('message-or-attachment');
+  const [accessedByUsers, setAccessedByUsers] = useState('');
+  const [quickSummaryEnabled, setQuickSummaryEnabled] = useState(false);
 
   const CONDITION_OPTIONS = [
-    'Content contains sensitive info',
-    'Content is shared externally',
-    'Content contains trainable classifiers',
-    'File properties match conditions',
+    'Content contains',
+    'Accessed by',
   ];
 
   const ACTION_OPTIONS = [
@@ -169,11 +180,30 @@ export default function PolicyWizard({ onCancel }: PolicyWizardProps) {
     status: i < currentStep ? 'completed' as const : i === currentStep ? 'current' as const : 'upcoming' as const,
   }));
 
+  const addConditionType = (conditionType: string) => {
+    if (!activeConditions.includes(conditionType)) {
+      setActiveConditions((prev) => [...prev, conditionType]);
+    }
+    setConditionDropdownOpen(false);
+  };
+
+  const removeConditionType = (conditionType: string) => {
+    setActiveConditions((prev) => prev.filter((c) => c !== conditionType));
+  };
+
   const resetRuleDraft = () => {
     setDraftRuleName('');
     setDraftRuleDescription('');
     setDraftRuleGroups([{ id: 1, conditions: [] }]);
     setDraftRuleActions([]);
+    setActiveConditions([]);
+    setContentContainsCollapsed(false);
+    setAccessedByCollapsed(false);
+    setConditionGroupName('Default');
+    setConditionGroupOperator('Any of these');
+    setConditionPredicate('message-or-attachment');
+    setAccessedByUsers('');
+    setQuickSummaryEnabled(false);
     setIncidentReportsEnabled(true);
     setIncidentReportMode('every');
     setIncidentCountEnabled(false);
@@ -718,7 +748,7 @@ export default function PolicyWizard({ onCancel }: PolicyWizardProps) {
               <button className="rule-flyout-close" onClick={closeRuleEditor} aria-label="Close">✕</button>
             </div>
 
-            <div className="rule-flyout-body">
+            <div className="rule-flyout-body" onClick={() => { setConditionDropdownOpen(false); setActionDropdownOpen(false); }}>
               <div className="rule-editor-step">
                 <p className="wizard-desc rule-flyout-desc">
                   Use rules to define the type of sensitive information you want to protect. If the content matches many rules, the most restrictive one will be enforced.{' '}
@@ -750,52 +780,136 @@ export default function PolicyWizard({ onCancel }: PolicyWizardProps) {
                 </div>
 
                 <section className="rule-editor-section">
-                  <div className="rule-section-header-row">
+                  <div className="rule-section-header-row rule-section-collapsible" onClick={() => setConditionsCollapsed(!conditionsCollapsed)}>
+                    <span className={`rule-section-chevron ${conditionsCollapsed ? 'collapsed' : ''}`}>⌃</span>
                     <h2 className="rule-section-title">Conditions</h2>
                   </div>
+                  {!conditionsCollapsed && (
+                    <>
                   <p className="rule-section-desc">Define the conditions that must be met for this policy to be applied. Include specific content, senders, and recipients that you want the rule to detect. For more complex rules, create groups to exclude or include items. <a href="#condition-builder">Learn how the condition builder works</a></p>
-                  <div className="rule-link-row rule-link-row-tight">
-                    <button className="rule-inline-link" onClick={() => addConditionToGroup(draftRuleGroups[0].id)}>+ Add condition</button>
-                    <button className="rule-inline-link" onClick={addConditionGroup}>Add group</button>
+
+                  <div className="cond-quick-summary-row">
+                    <button className={`incident-toggle small ${quickSummaryEnabled ? 'on' : ''}`} onClick={() => setQuickSummaryEnabled(!quickSummaryEnabled)} aria-pressed={quickSummaryEnabled}>
+                      <span className="incident-toggle-knob" />
+                    </button>
+                    <span className="cond-quick-summary-label">Quick summary</span>
                   </div>
-                  {draftRuleGroups.some((group) => group.conditions.length > 0) && (
-                    <div className="rule-groups-stack rule-groups-inline">
-                      {draftRuleGroups.map((group, groupIndex) =>
-                        group.conditions.length > 0 ? (
-                          <div key={group.id} className="rule-group-card rule-group-card-compact">
-                            <div className="rule-group-header">
-                              <div>
-                                <p className="rule-group-label">Group {groupIndex + 1}</p>
+
+                  {activeConditions.map((condType, idx) => (
+                    <div key={condType}>
+                      {idx > 0 && (
+                        <div className="cond-operator-row">
+                          <select className="cond-operator-select" defaultValue="AND">
+                            <option>AND</option>
+                            <option>OR</option>
+                          </select>
+                        </div>
+                      )}
+
+                      {condType === 'Content contains' && (
+                        <div className="cond-panel">
+                          <div className="cond-panel-header" onClick={() => setContentContainsCollapsed(!contentContainsCollapsed)}>
+                            <span className={`rule-section-chevron ${contentContainsCollapsed ? 'collapsed' : ''}`}>⌃</span>
+                            <h3 className="cond-panel-title">Content contains</h3>
+                            <button className="cond-panel-delete" onClick={(e) => { e.stopPropagation(); removeConditionType('Content contains'); }} aria-label="Remove Content contains">🗑</button>
+                          </div>
+                          {!contentContainsCollapsed && (
+                            <div className="cond-panel-body">
+                              <div className="cond-group-row">
+                                <div className="cond-group-name">
+                                  <label className="field-label">Group name <span className="required">*</span></label>
+                                  <input className="field-input" type="text" value={conditionGroupName} onChange={(e) => setConditionGroupName(e.target.value)} />
+                                </div>
+                                <div className="cond-group-operator">
+                                  <label className="field-label">Group operator</label>
+                                  <select className="field-select" value={conditionGroupOperator} onChange={(e) => setConditionGroupOperator(e.target.value)}>
+                                    <option>Any of these</option>
+                                    <option>All of these</option>
+                                    <option>None of these</option>
+                                  </select>
+                                  <button className="cond-group-delete-btn" aria-label="Remove group">🗑</button>
+                                </div>
+                              </div>
+                              <div className="cond-add-row">
+                                <button className="rule-inline-link">Add <span className="rule-dropdown-chevron">⌄</span></button>
+                              </div>
+                              <div className="cond-predicate-section">
+                                <p className="cond-predicate-label">Evaluate predicate for (available for Exchange workload only)</p>
+                                <div className="cond-predicate-radios">
+                                  <label className="cond-radio"><input type="radio" name="predicate" checked={conditionPredicate === 'message-or-attachment'} onChange={() => setConditionPredicate('message-or-attachment')} /><span>Message or attachment</span></label>
+                                  <label className="cond-radio"><input type="radio" name="predicate" checked={conditionPredicate === 'message-only'} onChange={() => setConditionPredicate('message-only')} /><span>Message only</span></label>
+                                  <label className="cond-radio"><input type="radio" name="predicate" checked={conditionPredicate === 'attachments-only'} onChange={() => setConditionPredicate('attachments-only')} /><span>Attachments only</span></label>
+                                </div>
+                              </div>
+                              <div className="cond-create-group-row">
+                                <button className="rule-inline-link">✨ Create group</button>
                               </div>
                             </div>
-                            <div className="rule-chip-list">
-                              {group.conditions.map((condition, conditionIndex) => (
-                                <div key={`${group.id}-${condition}-${conditionIndex}`} className="rule-chip-row">
-                                  <span className="rule-chip-label">{condition}</span>
-                                  <button
-                                    className="rule-chip-remove"
-                                    onClick={() => removeConditionFromGroup(group.id, conditionIndex)}
-                                    aria-label={`Remove ${condition}`}
-                                  >
-                                    ✕
-                                  </button>
-                                </div>
-                              ))}
-                            </div>
+                          )}
+                        </div>
+                      )}
+
+                      {condType === 'Accessed by' && (
+                        <div className="cond-panel">
+                          <div className="cond-panel-header" onClick={() => setAccessedByCollapsed(!accessedByCollapsed)}>
+                            <span className={`rule-section-chevron ${accessedByCollapsed ? 'collapsed' : ''}`}>⌃</span>
+                            <h3 className="cond-panel-title">Accessed by</h3>
+                            <button className="cond-panel-delete" onClick={(e) => { e.stopPropagation(); removeConditionType('Accessed by'); }} aria-label="Remove Accessed by">🗑</button>
                           </div>
-                        ) : null
+                          {!accessedByCollapsed && (
+                            <div className="cond-panel-body">
+                              <p className="cond-accessed-desc">Detects activity performed by the users you specify.</p>
+                              <div className="cond-accessed-input-row">
+                                <input className="field-input cond-accessed-input" type="text" placeholder="Enter user addresses (such as someone@contoso.com). Separate multiple entries with commas." value={accessedByUsers} onChange={(e) => setAccessedByUsers(e.target.value)} />
+                                <button className="cond-accessed-add-btn">＋ Add</button>
+                              </div>
+                            </div>
+                          )}
+                        </div>
                       )}
                     </div>
+                  ))}
+
+                  <div className="rule-link-row rule-link-row-tight">
+                    <div className="rule-dropdown-wrapper">
+                      <button className="rule-inline-link rule-dropdown-trigger" onClick={(e) => { e.stopPropagation(); setConditionDropdownOpen(!conditionDropdownOpen); setActionDropdownOpen(false); }}>
+                        <span className="rule-add-icon">＋</span> Add condition <span className="rule-dropdown-chevron">⌄</span>
+                      </button>
+                      {conditionDropdownOpen && (
+                        <div className="rule-dropdown-menu">
+                          {CONDITION_OPTIONS.filter((opt) => !activeConditions.includes(opt)).map((opt) => (
+                            <button key={opt} className="rule-dropdown-item" onClick={() => addConditionType(opt)}>{opt}</button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                    <button className="rule-inline-link"><span className="rule-add-icon">⊞</span> Add group</button>
+                  </div>
+                    </>
                   )}
                 </section>
 
                 <section className="rule-editor-section">
-                  <div className="rule-section-header-row">
+                  <div className="rule-section-header-row rule-section-collapsible" onClick={() => setActionsCollapsed(!actionsCollapsed)}>
+                    <span className={`rule-section-chevron ${actionsCollapsed ? 'collapsed' : ''}`}>⌃</span>
                     <h2 className="rule-section-title">Actions</h2>
                   </div>
+                  {!actionsCollapsed && (
+                    <>
                   <p className="rule-section-desc">Use actions to protect content when the conditions are met.</p>
                   <div className="rule-link-row rule-link-row-tight">
-                    <button className="rule-inline-link" onClick={addRuleAction}>+ Add an action</button>
+                    <div className="rule-dropdown-wrapper">
+                      <button className="rule-inline-link rule-dropdown-trigger" onClick={(e) => { e.stopPropagation(); setActionDropdownOpen(!actionDropdownOpen); setConditionDropdownOpen(false); }}>
+                        <span className="rule-add-icon">＋</span> Add an action <span className="rule-dropdown-chevron">⌄</span>
+                      </button>
+                      {actionDropdownOpen && (
+                        <div className="rule-dropdown-menu">
+                          {ACTION_OPTIONS.filter((opt) => !draftRuleActions.includes(opt)).map((opt) => (
+                            <button key={opt} className="rule-dropdown-item" onClick={() => { setDraftRuleActions((prev) => [...prev, opt]); setActionDropdownOpen(false); }}>{opt}</button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   </div>
                   {draftRuleActions.length > 0 && (
                     <div className="rule-group-card rule-group-card-compact rule-group-card-actions">
@@ -815,12 +929,16 @@ export default function PolicyWizard({ onCancel }: PolicyWizardProps) {
                       </div>
                     </div>
                   )}
+                    </>
+                  )}
                 </section>
 
                 <section className="rule-editor-section">
-                  <div className="rule-section-header-row">
+                  <div className="rule-section-header-row rule-section-collapsible" onClick={() => setIncidentCollapsed(!incidentCollapsed)}>
+                    <span className={`rule-section-chevron ${incidentCollapsed ? 'collapsed' : ''}`}>⌃</span>
                     <h2 className="rule-section-title">Incident reports</h2>
                   </div>
+                  {!incidentCollapsed && (
                   <div className="incident-panel">
                     <div className="incident-row">
                       <span className="incident-label">Send an alert to admins when a rule match occurs.</span>
@@ -895,6 +1013,7 @@ export default function PolicyWizard({ onCancel }: PolicyWizardProps) {
                       </div>
                     </div>
                   </div>
+                  )}
                 </section>
               </div>
             </div>
